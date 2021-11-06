@@ -1,0 +1,274 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #dbecf3;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs,
+h1 {
+  flex: 50%;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  background-color: #ccccc2;
+  padding: 0 35px 0 35px;
+}
+
+.bar h1 {
+  color: #9d9582;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  color: gray;
+  text-decoration: none;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.top {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 20px;
+  color: #9d9582;
+}
+
+.postcard {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 1000px;
+  color: #84abb2;
+}
+
+.card {
+  display: flex;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.post h1 {
+  color: #9d9582;
+}
+
+.card button {
+  background: transparent;
+  border: none;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+.group-btn {
+  margin-top: 20px;
+}
+
+.viewBtn {
+  width: 100px;
+  background-color: #84abb2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.view {
+  align-self: flex-end;
+  align-self: center;
+}
+
+.del, .edit {
+  align-self: flex-end;
+}
+
+.form-box {
+  min-width: 40%;
+  border: dotted #faede7;
+  background-color: #eeeee4;
+  margin: 0vw;
+  padding: 1vw;
+  position: relative;
+  /* position:relative for .prevBtn and .nextBtn position:absolute; */
+}
+
+.form-box h5 {
+  font-size: 20px;
+  text-align: center;
+  margin: 0 0 0.5vh 0;
+}
+
+.form-box label {
+  display: block;
+  font-size: 14px;
+  margin: 0 0 2vh 0;
+}
+
+.form-box input,
+textarea {
+  display: block;
+  width: 97%;
+  padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+  margin: 0.9vw 0;
+  border: 0;
+  border-radius: 5px;
+}
+
+.form-box textarea {
+  height: 15vh;
+}
+
+.form-box .submit {
+  background-color: #b9b19a;
+  color: #ffffff;
+  align-self: center;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.create_post {
+  width: 50%;
+  border: dotted #9d9582;
+  padding: 1vw;
+  position: relative;
+  margin: 30px auto;
+}
+
+.create_post h1 {
+  font-size: 25px;
+  text-align: center;
+  color: #84abb2;
+}
+
+.create_post label {
+  display: block;
+  margin: 0 0 2vh 0;
+}
+
+.create_post input,
+textarea,
+select {
+  display: block;
+  width: 95%;
+  padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+  margin: 0.9vw 0;
+  border: 0;
+  border-radius: 5px;
+}
+
+.create_post textarea {
+  height: 15vh;
+}
+
+.content {
+  padding: 20px;
+}
+
+.content button {
+  background: transparent;
+  border: none;
+}
+
+.context {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px dotted #b9b19a;
+}
+.context2 {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding: 10px;
+  margin: 20px 10px 20px 0;
+  border-radius: 5px;
+  border: 1px dotted #b9b19a;
+}
+
+.edit {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.comment_flex {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.comment_flex label {
+  display: block;
+  margin: 0 0 2vh 0;
+}
+
+.comment_flex input {
+  display: block;
+  padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+  margin: 10px 0;
+  border: 0;
+  width: 50%;
+  border-radius: 5px;
+}
+
+.comment_flex textarea {
+  height: 15vh;
+  width: 50%;
+}
+
+.form-box .comment_btn {
+  width: 100px;
+  background-color: #84abb2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.deleted {
+  text-align: center;
+  color: #9d9582;
+  padding-top: 200px;
+}
