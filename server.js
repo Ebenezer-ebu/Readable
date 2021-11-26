@@ -115,19 +115,19 @@ app.get("/root", (req, res) => {
   res.send(help);
 });
 
-app.use((req, res, next) => {
-  const token = req.get("Authorization");
+// app.use((req, res, next) => {
+//   const token = req.get("Authorization");
 
-  if (token) {
-    req.token = token;
-    next();
-  } else {
-    res.status(403).send({
-      error:
-        "Please provide an Authorization header to identify yourself (can be whatever you want)",
-    });
-  }
-});
+//   if (token) {
+//     req.token = token;
+//     next();
+//   } else {
+//     res.status(403).send({
+//       error:
+//         "Please provide an Authorization header to identify yourself (can be whatever you want)",
+//     });
+//   }
+// });
 
 app.get("/categories", (req, res) => {
   categories.getAll(req.token).then(
