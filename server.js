@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/root", (req, res) => {
   const help = `
   <pre>
     Welcome to the Udacity Readable API!
