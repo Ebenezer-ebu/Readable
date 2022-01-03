@@ -1,20 +1,34 @@
 {
-  "name": "reactnd-project-readable-starter",
-  "version": "1.0.0",
-  "description": "* Install and start the API server     - `cd api-server`     - `npm install` or `yarn install`      - `node server`     To run both frontend and backend concurrently     - `npm run dev`",
+  "name": "reddit-clone-server",
+  "version": "0.0.1",
+  "description": "A server for the Udacity Reddit Clone project for ReactND",
   "main": "index.js",
+  "keywords": [
+    "udacity",
+    "redux",
+    "readable",
+    "react"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon server.js",
+    "build": "cd frontend && npm install && npm run build",
+    "client": "npm run start --prefix frontend",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ebenezer-ebu/Readable_udacity.git"
-  },
-  "keywords": [],
-  "author": "",
+  "author": "Ebenezer",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ebenezer-ebu/Readable_udacity/issues"
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "clone": "^2.1.1",
+    "concurrently": "^6.3.0",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2"
   },
-  "homepage": "https://github.com/Ebenezer-ebu/Readable_udacity#readme"
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  },
+  "engines": {
+    "node": "14.17.3"
+  }
 }
