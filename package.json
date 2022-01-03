@@ -1,0 +1,20 @@
+{
+  "name": "reactnd-project-readable-starter",
+  "version": "1.0.0",
+  "description": "* Install and start the API server     - `cd api-server`     - `npm install` or `yarn install`      - `node server`     To run both frontend and backend concurrently     - `npm run dev`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ebenezer-ebu/Readable_udacity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ebenezer-ebu/Readable_udacity/issues"
+  },
+  "homepage": "https://github.com/Ebenezer-ebu/Readable_udacity#readme"
+}
