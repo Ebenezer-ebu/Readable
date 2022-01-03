@@ -29,6 +29,10 @@ app.use((req, res, next) => {
   }
 });
 
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server!" });
+})
+
 app.get("/categories", (req, res) => {
   categories.getAll(req.token).then(
     (data) => res.send(data),
