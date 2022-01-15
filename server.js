@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const express = require("express");
+const userRoute = require("./routes/userRoutes");
+const connectDB = require("./config/db");
 const path = require("path");
 const cors = require("cors");
 const config = require("./config");
@@ -10,9 +12,12 @@ const comments = require("./comments");
 
 const app = express();
 
+// Connect to database
+connectDB();
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname, './frontend/build')));
+app.use(express.static(path.resolve(__dirname, "./frontend/build")));
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -29,9 +34,11 @@ app.use((req, res, next) => {
   }
 });
 
+app.use("/", userRoute);
+
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
-})
+});
 
 app.get("/categories", (req, res) => {
   categories.getAll(req.token).then(
@@ -210,9 +217,7 @@ app.delete("/comments/:id", (req, res) => {
 
 if (process.env.Node_ENV === "production") {
   app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "./frontend/build", "index.html")
-    );
+    res.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
   });
 }
 
