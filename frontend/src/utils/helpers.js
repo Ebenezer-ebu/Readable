@@ -1,3 +1,5 @@
+import jwtdecode from "jwt-decode";
+
 export function formatDate(timestamp) {
   const d = new Date(timestamp);
   const time = d.toLocaleTimeString("en-US");
@@ -11,7 +13,14 @@ export function formatDate(timestamp) {
     "Saturday",
   ];
   const dayOfTheWeek = days[d.getDay()];
-  return dayOfTheWeek + " " + time.substr(0, 5) + time.slice(-2) + " | " + d.toLocaleDateString();
+  return (
+    dayOfTheWeek +
+    " " +
+    time.substr(0, 5) +
+    time.slice(-2) +
+    " | " +
+    d.toLocaleDateString()
+  );
 }
 
 export function timestamp() {
@@ -47,3 +56,14 @@ export function formatPostComment(data, timestamp, id, parentId) {
   };
 }
 
+export function getUser() {
+  try {
+    let pass = document.cookie.split("=")[1];
+    let decoded = jwtdecode(pass);
+    return decoded;
+    // valid token format
+  } catch (error) {
+    // invalid token format
+    return undefined;
+  }
+}

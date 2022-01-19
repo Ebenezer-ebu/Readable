@@ -13,7 +13,7 @@ const tokenSchema = new Schema(
       required: true,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const Token = mongoose.model("Token", tokenSchema);

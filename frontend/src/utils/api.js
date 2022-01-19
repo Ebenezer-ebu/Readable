@@ -1,6 +1,6 @@
-// Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token;
 if (!token) token = localStorage.token = Math.random().toString(36).substr(-8);
+
 
 const headers = {
   Accept: "application/json",
@@ -110,6 +110,51 @@ export const editCommentByID = ({ author, body }, id) =>
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ author, body }),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+
+export const signupUser = ({ username, email, imageUrl, password }) =>
+  fetch("/signup", {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, email, imageUrl, password }),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+
+export const loginUser = ({ email, password }) =>
+  fetch("/login", {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+
+export const confirmPasswordChange = ({ email }) =>
+  fetch("/changePasswordNotification", {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+
+export const changePassword = ({ newPassword, userId, token }) =>
+  fetch("/auth/resetPassword", {
+    method: "POST",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify({ newPassword, userId, token }),
   })
     .then((res) => res.json())
     .then((data) => data);

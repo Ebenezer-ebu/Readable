@@ -1,11 +1,14 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #dbecf3;
+  width: 100%;
+  height: 100%;
 }
 
 code {
@@ -163,6 +166,16 @@ textarea {
   border-radius: 5px;
 }
 
+.home .submit {
+  background-color: #b9b19a;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin: 0 auto;
+  align-self: center;
+}
+
 .create_post {
   width: 50%;
   border: dotted #9d9582;
@@ -278,4 +291,61 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.home {
+  background-image: url("images/blog-post-background.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup,
+.login {
+  width: 150px;
+  height: 40px;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.signup {
+  background: red;
+  color: white;
+}
+
+#head {
+  color: white;
+}
+
+.form-btn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-btn a {
+  text-decoration: underline;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 100px auto;
+  width: 30%;
+  height: 100%;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.profile-container a {
+  text-decoration: underline;
 }

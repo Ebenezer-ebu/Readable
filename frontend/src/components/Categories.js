@@ -9,30 +9,30 @@ import { getInitialPost, handleVoted, handleDeletePost } from "../actions/post";
 import { handleInitialPost } from "../actions/shared";
 import Posts from "./Posts";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { getUser } from "../utils/helpers";
+import { setAuthor } from "../actions/author";
 
 const img = [react, redux, udacity];
 
 const Categories = (props) => {
   const { categories, posts, dispatch } = props;
+  const user = getUser();
+  console.log(user);
   const keys = Object.keys(categories);
   let keys2 = Object.keys(posts);
   const [check, setCheck] = useState("score");
   const history = useHistory();
   const location = useLocation();
-  console.log(location);
   const handleChange = (e) => {
     setCheck(e.target.value);
   };
 
   useEffect(() => {
-    if (
-      location.pathname !== "/"
-    ) {
+    if (location.pathname !== "/home") {
       dispatch(getInitialPost(location.pathname));
-    }
-    else{
+    } else {
       dispatch(handleInitialPost());
-    } 
+    }
   }, [location.pathname, dispatch]);
 
   const handleVote = (id, option) => {
@@ -47,6 +47,11 @@ const Categories = (props) => {
     dispatch(handleDeletePost(id));
   };
 
+  const setUser = () => {
+    document.cookie = "user=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    props.dispatch(setAuthor({}));
+  };
+
   if (check === "score") {
     keys2.sort((a, b) => posts[b].voteScore - posts[a].voteScore);
   } else if (check === "date") {
@@ -59,7 +64,7 @@ const Categories = (props) => {
         <div className="tabs">
           <ul>
             <li>
-              <Link to="/">ALL</Link>
+              <Link to="/home">ALL</Link>
             </li>
             {keys.map((item) => (
               <li key={item}>
@@ -68,6 +73,17 @@ const Categories = (props) => {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link to="/profile">
+                <img
+                  src={user.imageUrl}
+                  style={{ height: 50, width: 50, borderRadius: "50%" }}
+                />
+              </Link>
+            </li>
+            <li onClick={setUser}>
+              <Link to="/">Log Out</Link>
+            </li>
           </ul>
         </div>
       </div>

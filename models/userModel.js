@@ -15,6 +15,7 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
+    imageUrl: String,
     password: String,
   },
   { timestamps: true }

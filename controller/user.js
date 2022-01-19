@@ -10,7 +10,7 @@ const {
 const { sendEmail } = require("../utils/sendEmail");
 
 const userSignup = async (req, res) => {
-  let { username, email, password } = req.body;
+  let { username, email, imageUrl, password } = req.body;
   password = hashPassword(password);
   try {
     //does email exits in database
@@ -21,13 +21,24 @@ const userSignup = async (req, res) => {
     const user = new User({
       username,
       email,
+      imageUrl,
       password,
     });
+    sendEmail(
+      user.email,
+      "Welcome To Readable",
+      {
+        name: user.username,
+      },
+      "./template/welcome.handlebars"
+    );
     const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET);
     await user.save();
-    return res
-      .status(201)
-      .json({ message: "User successfully created", user, token });
+    return res.status(201).json({
+      message: "User successfully created go ahead and login",
+      user,
+      token,
+    });
   } catch (error) {
     return res.status(500).json({ error, message: "Internal server error" });
   }
@@ -46,7 +57,15 @@ const userLogin = async (req, res) => {
     if (!correctPassword) {
       return res.status(400).json({ error: "Wrong Password" });
     }
-    return res.status(200).json({ message: "User login successfully" });
+    let obj = {
+      username: userInDB.username,
+      email: userInDB.email,
+      imageUrl: userInDB.imageUrl,
+    };
+    const token = await generateToken(obj);
+    return res
+      .status(200)
+      .json({ message: "User login successfully", token, userInDB });
   } catch (error) {
     return res.status(500).json({ error, message: "Internal server error" });
   }
@@ -65,17 +84,16 @@ const changePassword = async (req, res) => {
     if (token) await token.deleteOne();
 
     let resetToken = crypto.randomBytes(32).toString("hex");
-    const hash = hashPassword(resetToken);
-
+    const hash = await hashPassword(resetToken);
     await new Token({
       userId: userInDB._id,
       token: hash,
     }).save();
 
-    const link = `${process.env.clientURL}/passwordReset?token=${resetToken}&id=${userInDB._id}`;
+    const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${userInDB._id}`;
 
     sendEmail(
-      user.email,
+      userInDB.email,
       "Password Reset Request",
       {
         name: userInDB.username,
@@ -83,7 +101,10 @@ const changePassword = async (req, res) => {
       },
       "./template/requestResetPassword.handlebars"
     );
-    return res.status(200).json({ link });
+    return res.status(200).json({
+      message: "Check your email to confirm change of password",
+      link,
+    });
   } catch (error) {
     return res.status(500).json({ error, message: "Internal server error" });
   }
@@ -96,17 +117,18 @@ const resetPassword = async (req, res) => {
     if (!resetToken) {
       return res.status(409).json({ error: "Invalid or expired token" });
     }
-    const isValid = await bcrypt.compare(token, resetToken.token);
+    const isValid = await comparePassword(resetToken.token, token);
     if (!isValid) {
       return res.status(409).json({ error: "Invalid or expired token" });
     }
-    const hashedPassword = hashedPassword(newPassword);
+
+    const hashedPassword = await hashPassword(newPassword);
+
     await User.updateOne(
       { _id: userId },
       { $set: { password: hashedPassword } },
       { new: true }
     );
-
     const user = await User.findById({ _id: userId });
 
     sendEmail(
@@ -119,9 +141,13 @@ const resetPassword = async (req, res) => {
     );
 
     await resetToken.deleteOne();
-    return res.status(200).json({ message: "Password Reset Successfully" });
+    return res
+      .status(200)
+      .json({ message: "Password Reset Successfully go ahead to login" });
   } catch (error) {
-    return res.status(500).json({ error, message: "Internal server error" });
+    return res.status(500).json({
+      error: "Internal Server Error",
+    });
   }
 };
 

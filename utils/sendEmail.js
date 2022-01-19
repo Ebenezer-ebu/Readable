@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 const sendEmail = async (email, subject, payload, template) => {
+  console.log(email, subject, payload, template);
   try {
     // create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
@@ -13,7 +14,7 @@ const sendEmail = async (email, subject, payload, template) => {
         pass: process.env.EMAIL_PASSWORD, // naturally, replace both with your real credentials or an application-specific password
       },
     });
-
+    
     const source = fs.readFileSync(path.join(__dirname, template), "utf8");
     const compiledTemplate = handlebars.compile(source);
 
@@ -28,36 +29,23 @@ const sendEmail = async (email, subject, payload, template) => {
         html: compiledTemplate(payload),
       };
     };
-
     // Send email
-    transporter.sendMail(mailOptions(), (error, info) => {
-      if (error) {
-        return error;
-      } else {
-        console.log(info);
-        return res.status(200).json({
+    transporter
+      .sendMail(mailOptions())
+      .then((data) => {
+        console.log("Mail sent", data);
+        return {
           success: true,
-        });
-      }
-    });
+        };
+      })
+      .catch((err) => {
+        console.error("Failure", err);
+      });
   } catch (error) {
+    console.log(error);
     return error;
   }
 };
 
-// const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-// {
-//       name: user.name,
-//       link: link,
-//     },
-/*
-Example:
-sendEmail(
-  "youremail@gmail.com,
-  "Email subject",
-  { name: "Eze" },
-  "./template/requestResetPassword.handlebars"
-);
-*/
 
 module.exports = { sendEmail };

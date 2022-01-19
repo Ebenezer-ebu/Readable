@@ -6,8 +6,11 @@ const JWT = require("jsonwebtoken");
  * @returns {string} returns generated token
  */
 const JWTSecret = process.env.JWT_SECRET;
+
 const generateToken = (payload) => {
+  console.log(payload, "****************");
   const token = JWT.sign(payload, JWTSecret, { expiresIn: "3d" });
+  console.log(token);
   return token;
 };
 

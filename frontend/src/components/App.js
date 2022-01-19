@@ -6,6 +6,12 @@ import { handleInitialData } from "../actions/shared";
 import Categories from "./Categories";
 import DetailPage from "./DetailPage";
 import CreatePost from "./CreatePost";
+import Home from "./Home";
+import Signup from "./Signup";
+import Login from "./Login";
+import ChangePassword from "./ChangePassword";
+import Profile from "./Profile";
+import ApprovePasswordChange from "./ApprovePasswordChange";
 
 const history = createBrowserHistory();
 
@@ -17,8 +23,17 @@ class App extends Component {
     return (
       <Router history={history}>
         <Switch>
-          <Route exact path="/" component={Categories} />
+          <Route exact path="/" component={Home} />
+          <Route path="/home" component={Categories} />
           <Route path="/create_post" component={CreatePost} />
+          <Route path="/signup_page" component={Signup} />
+          <Route path="/login_page" component={Login} />
+          <Route path="/profile" component={Profile} />
+          <Route
+            path="/approve_password_change"
+            component={ApprovePasswordChange}
+          />
+          <Route path="/passwordReset" component={ChangePassword} />
           <Route path="/:category/:post_id" component={DetailPage} />
           <Route path="/:category" component={Categories} />
         </Switch>
