@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { timestamp, uniqueId, formatPost } from "../utils/helpers";
+import { timestamp, uniqueId, formatPost, getUser } from "../utils/helpers";
 import { handlePost } from "../actions/post";
 
 const CreatePost = (props) => {
   const { dispatch } = props;
+  const user = getUser();
   const [inputValue, setValue] = useState({
     title: "",
     author: "",
@@ -17,9 +18,9 @@ const CreatePost = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    let post = formatPost(inputValue, timestamp(), uniqueId());
+    let post = formatPost(inputValue, user.username, user.userId);
     dispatch(handlePost(post));
-    props.history.push("/");
+    props.history.push("/home");
   };
   return (
     <div className="create_post">
@@ -33,16 +34,6 @@ const CreatePost = (props) => {
               name="title"
               placeholder="Title..."
               value={inputValue.title}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Author name:
-            <input
-              type="text"
-              name="author"
-              placeholder="Author..."
-              value={inputValue.author}
               onChange={handleChange}
             />
           </label>

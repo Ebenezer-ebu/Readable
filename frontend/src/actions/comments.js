@@ -51,9 +51,14 @@ export function handleParentComment(id) {
   return (dispatch) => {
     return getCommentByParent(id)
       .then((data) => {
-        dispatch(parentComment(data));
+        if (data.error) {
+          throw new Error(data.error);
+        } else {
+          dispatch(parentComment(data.data));
+        }
       })
       .catch((e) => {
+        dispatch(parentComment({}));
         console.log("Error: ", e);
       });
   };
@@ -63,7 +68,10 @@ export function handleVotedComment(id, option) {
   return (dispatch) => {
     return voteComment(id, option)
       .then((data) => {
-        dispatch(voted(data));
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        dispatch(voted(data.data));
       })
       .catch((e) => {
         console.log("Error: ", e);
@@ -75,7 +83,10 @@ export function handlePostComment(info) {
   return (dispatch) => {
     return postComment(info)
       .then((data) => {
-        dispatch(postedComment(data));
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        dispatch(postedComment(data.data));
       })
       .catch((e) => {
         console.log("Error: ", e);
@@ -98,7 +109,10 @@ export function handleEditComment(body, id) {
   return (dispatch) => {
     return editCommentByID(body, id)
       .then((data) => {
-        dispatch(editComment(data));
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        dispatch(editComment(data.data));
       })
       .catch((e) => {
         console.log("Error: ", e);

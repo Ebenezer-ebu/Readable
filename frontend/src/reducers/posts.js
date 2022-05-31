@@ -36,7 +36,7 @@ export default function posts(state = {}, action) {
       };
     case POST_COMMENT:
       const res = Object.keys(state);
-      let index = res.find((item) => state[item].id === action.info.parentId);
+      let index = res.find((item) => state[item]._id === action.info.parentId);
       return {
         ...state,
         [index]: {
@@ -49,11 +49,11 @@ export default function posts(state = {}, action) {
       let indx = postEdit.find((item) => state[item].id === action.data.id);
       return {
         ...state,
-        [indx]: action.data
-      }
+        [indx]: action.data,
+      };
     case DELETE_POST:
       const delPostKeys = Object.keys(state);
-      let delIndx = delPostKeys.find((item) => state[item].id === action.id);
+      let delIndx = delPostKeys.find((item) => state[item]._id === action.id);
       const { [delIndx]: value, ...rest } = state;
       return rest;
     default:

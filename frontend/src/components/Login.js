@@ -6,7 +6,6 @@ import SuccessError from "./SuccessError";
 
 const Login = (props) => {
   const { dispatch, state, history } = props;
-  console.log(props);
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",

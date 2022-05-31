@@ -1,7 +1,6 @@
 let token = localStorage.token;
 if (!token) token = localStorage.token = Math.random().toString(36).substr(-8);
 
-
 const headers = {
   Accept: "application/json",
   Authorization: token,
@@ -20,19 +19,19 @@ export const getPostByCategories = (category) =>
 export const getAllPost = () =>
   fetch("/posts", { headers })
     .then((res) => res.json())
-    .then((data) => data);
+    .then((data) => data.data);
 
-export const vote = (id, option) =>
+export const vote = (id, option, voterId) =>
   fetch(`/posts/${id}`, {
     method: "POST",
     headers: {
       ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ option }),
+    body: JSON.stringify({ option, voterId }),
   })
     .then((res) => res.json())
-    .then((data) => data);
+    .then((data) => data.data);
 
 export const getCommentByParent = (id) =>
   fetch(`/posts/${id}/comments`, { headers })
@@ -42,7 +41,7 @@ export const getCommentByParent = (id) =>
 export const getPostsByID = (id) =>
   fetch(`/posts/${id}`, { headers })
     .then((res) => res.json())
-    .then((data) => data);
+    .then((data) => data.data);
 
 export const deletePostByID = (id) =>
   fetch(`/posts/${id}`, { method: "DELETE", headers })
@@ -61,26 +60,26 @@ export const voteComment = (id, option) =>
     .then((res) => res.json())
     .then((data) => data);
 
-export const post = ({ id, timestamp, author, title, body, category }) =>
+export const post = ({ author, authorId, title, body, category }) =>
   fetch("/posts", {
     method: "POST",
     headers: {
       ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id, timestamp, author, title, body, category }),
+    body: JSON.stringify({ author, authorId, title, body, category }),
   })
     .then((res) => res.json())
     .then((data) => data);
 
-export const postComment = ({ id, timestamp, author, body, parentId }) =>
+export const postComment = ({ author, authorId, body, parentId }) =>
   fetch("/comments", {
     method: "POST",
     headers: {
       ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id, timestamp, author, body, parentId }),
+    body: JSON.stringify({ author, authorId, body, parentId }),
   })
     .then((res) => res.json())
     .then((data) => data);
@@ -90,26 +89,26 @@ export const deleteCommentByID = (id) =>
     .then((res) => res.json())
     .then((data) => data);
 
-export const editPostByID = ({ author, body, title }, id) =>
+export const editPostByID = ({ body, title }, id) =>
   fetch(`/posts/${id}`, {
     method: "PUT",
     headers: {
       ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ author, body, title }),
+    body: JSON.stringify({ body, title }),
   })
     .then((res) => res.json())
-    .then((data) => data);
+    .then((data) => data.data);
 
-export const editCommentByID = ({ author, body }, id) =>
+export const editCommentByID = ({ body }, id) =>
   fetch(`/comments/${id}`, {
     method: "PUT",
     headers: {
       ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ author, body }),
+    body: JSON.stringify({ body }),
   })
     .then((res) => res.json())
     .then((data) => data);

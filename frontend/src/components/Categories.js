@@ -17,7 +17,6 @@ const img = [react, redux, udacity];
 const Categories = (props) => {
   const { categories, posts, dispatch } = props;
   const user = getUser();
-  console.log(user);
   const keys = Object.keys(categories);
   let keys2 = Object.keys(posts);
   const [check, setCheck] = useState("score");
@@ -36,14 +35,15 @@ const Categories = (props) => {
   }, [location.pathname, dispatch]);
 
   const handleVote = (id, option) => {
-    dispatch(handleVoted(id, option));
+    dispatch(handleVoted(id, option, user.userId));
   };
-  const handleDetailPage = (e, details, id, name) => {
+  const handleDetailPage = (e, id, name) => {
     e.preventDefault();
     history.push(`/${name}/${id}`);
   };
 
   const handleDelete = (id) => {
+    console.log(id);
     dispatch(handleDeletePost(id));
   };
 
@@ -60,7 +60,7 @@ const Categories = (props) => {
   return (
     <div className="container">
       <div className="bar">
-        <h1>Categories</h1>
+        <h1>Readable</h1>
         <div className="tabs">
           <ul>
             <li>
@@ -128,12 +128,7 @@ const Categories = (props) => {
                 <button
                   className="viewBtn"
                   onClick={(e) =>
-                    handleDetailPage(
-                      e,
-                      posts[item],
-                      posts[item].id,
-                      posts[item].category
-                    )
+                    handleDetailPage(e, posts[item]._id, posts[item].category)
                   }
                 >
                   View more

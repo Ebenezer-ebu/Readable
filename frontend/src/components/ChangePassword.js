@@ -18,7 +18,6 @@ const ChangePassword = (props) => {
     setInputValue({ ...inputValue, [name]: value });
   };
   const values = queryString.parse(search);
-  console.log(values);
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(

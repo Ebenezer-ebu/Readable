@@ -7,19 +7,16 @@ const postSchema = new Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
     body: {
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
     author: {
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
     authorId: {
       type: Schema.Types.ObjectId,
@@ -30,13 +27,12 @@ const postSchema = new Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
-    voteScore: Number,
-    supportVoters: [Schema.Types.ObjectId],
-    opposeVoters: [Schema.Types.ObjectId],
-    commentCount: Number,
-    comments: [Schema.Types.ObjectId],
+    voteScore: { type: Number, default: 0 },
+    supportVoters: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    opposeVoters: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    commentCount: { type: Number, default: 0 },
+    comments: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
@@ -44,4 +40,3 @@ const postSchema = new Schema(
 const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;
-

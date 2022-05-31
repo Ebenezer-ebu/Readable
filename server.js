@@ -1,10 +1,12 @@
 require("dotenv").config();
 
 const express = require("express");
-const userRoute = require("./routes/userRoutes");
 const connectDB = require("./config/db");
 const path = require("path");
 const cors = require("cors");
+const userRoute = require("./routes/userRoutes");
+const postRoute = require("./routes/postRoutes");
+const commentRoute = require("./routes/commentRoutes");
 const config = require("./config");
 const categories = require("./categories");
 const posts = require("./posts");
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", userRoute);
+app.use("/", postRoute);
+app.use("/", commentRoute);
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });

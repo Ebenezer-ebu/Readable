@@ -4,7 +4,6 @@ import { getUser } from "../utils/helpers";
 
 const Profile = () => {
   const user = getUser();
-  console.log(user);
   return (
     <div className="profile-container">
       <img

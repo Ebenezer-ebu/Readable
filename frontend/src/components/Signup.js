@@ -13,7 +13,6 @@ const Signup = (props) => {
     imageUrl: "",
   });
   const cloud = "https://api.cloudinary.com/v1_1/ifezulike/image/upload";
-  console.log(process.env.REACT_APP_CLOUDINARY_URL);
   const handleChange = (e) => {
     const { value, name, files } = e.target;
     if (files) {
@@ -28,7 +27,6 @@ const Signup = (props) => {
           return response.json();
         })
         .then((datas) => {
-          console.log(datas);
           setInputValue({ ...inputValue, imageUrl: datas.secure_url });
         });
     }
@@ -37,7 +35,6 @@ const Signup = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputValue);
     dispatch(handleSignupUser(inputValue));
     setInputValue({
       username: "",

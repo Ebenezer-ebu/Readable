@@ -5,13 +5,13 @@ import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { formatDate } from "../utils/helpers";
+import { formatDate, getUser } from "../utils/helpers";
 import { handleEditComment } from "../actions/comments";
 
 const Comment = (props) => {
   const { comment, handleCommentVotes, deleteComment, dispatch } = props;
+  const user = getUser();
   const [info, setInfo] = useState({
-    author: comment.author,
     body: comment.body,
   });
   const [form, showForm] = useState(false);
@@ -23,7 +23,7 @@ const Comment = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(handleEditComment(info, comment.id));
+    dispatch(handleEditComment(info, comment._id));
   };
 
   return (
@@ -36,18 +36,18 @@ const Comment = (props) => {
         </div>
         <p>{comment.author}</p>
         <p>{comment.body}</p>
-        <p>{formatDate(comment.timestamp)}</p>
+        <p>{formatDate(comment.createdAt)}</p>
         <p>{comment.voteScore}</p>
         <div>
-          <button onClick={() => handleCommentVotes(comment.id, "upVote")}>
+          <button onClick={() => handleCommentVotes(comment._id, "upVote")}>
             <ThumbUpAltIcon />
           </button>
-          <button onClick={() => handleCommentVotes(comment.id, "downVote")}>
+          <button onClick={() => handleCommentVotes(comment._id, "downVote")}>
             <ThumbDownAltIcon />
           </button>
         </div>
         <div className="icon del">
-          <button onClick={() => deleteComment(comment.id)}>
+          <button onClick={() => deleteComment(comment._id)}>
             <DeleteOutlineIcon />
           </button>
         </div>
@@ -56,16 +56,6 @@ const Comment = (props) => {
           <div className="form-box">
             <h3>Edit Comment</h3>
             <form onSubmit={handleSubmit}>
-              <label>
-                Author:
-                <input
-                  type="text"
-                  placeholder="Author..."
-                  name="author"
-                  value={info.author}
-                  onChange={handleChange}
-                />
-              </label>
               <label>
                 Comment:
                 <textarea

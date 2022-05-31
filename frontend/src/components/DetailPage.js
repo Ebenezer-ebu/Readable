@@ -16,25 +16,20 @@ import {
   handlePostComment,
   handleDeleteComment,
 } from "../actions/comments";
-import {
-  formatDate,
-  formatPostComment,
-  timestamp,
-  uniqueId,
-} from "../utils/helpers";
+import { formatDate, formatPostComment, getUser } from "../utils/helpers";
 
 const DetailPage = (props) => {
   const [info, setInfo] = useState({
-    author: "",
     body: "",
   });
   const [showForm, setShowForm] = useState(false);
   const { dispatch, match } = props;
   const { comment, eachPost } = props.state;
+  const user = getUser();
   const keys2 = Object.keys(comment);
   let detail = eachPost;
   const handleVote = (id, option) => {
-    dispatch(handleVoted(id, option));
+    dispatch(handleVoted(id, option, user.userId));
   };
 
   const handleCommentVotes = (id, option) => {
@@ -45,8 +40,8 @@ const DetailPage = (props) => {
     e.preventDefault();
     const result = formatPostComment(
       info,
-      timestamp(),
-      uniqueId(),
+      user.username,
+      user.userId,
       match.params.post_id
     );
     dispatch(handlePostComment(result));
@@ -69,9 +64,9 @@ const DetailPage = (props) => {
     const { params } = match;
     dispatch(handleParentComment(params.post_id));
     dispatch(handleGetPostByID(params.post_id));
-  }, [dispatch]);
+  }, [match.params.post_id, dispatch]);
 
-  if (!detail.id) {
+  if (!detail._id) {
     return <Deleted />;
   }
 
@@ -87,15 +82,15 @@ const DetailPage = (props) => {
           </div>
           <p>{detail.body}</p>
           <p>Post by {detail.author}</p>
-          <p>{formatDate(detail.timestamp)}</p>
+          <p>{formatDate(detail.createdAt)}</p>
           <p>{detail.commentCount} Comments</p>
           <div>{detail.voteScore} Votes</div>
 
           <div className="icon">
-            <button onClick={() => handleVote(detail.id, "upVote")}>
+            <button onClick={() => handleVote(detail._id, "upVote")}>
               <ThumbUpAltIcon />
             </button>
-            <button onClick={() => handleVote(detail.id, "downVote")}>
+            <button onClick={() => handleVote(detail._id, "downVote")}>
               <ThumbDownAltIcon />
             </button>
           </div>
@@ -127,16 +122,6 @@ const DetailPage = (props) => {
           </div>
           <div className="comment_flex">
             <form onSubmit={handleSubmit}>
-              <label>
-                Author:
-                <input
-                  type="text"
-                  placeholder="Author..."
-                  name="author"
-                  value={info.author}
-                  onChange={handleChange}
-                />
-              </label>
               <label>
                 Comment:
                 <textarea

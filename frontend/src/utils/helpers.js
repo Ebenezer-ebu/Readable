@@ -33,24 +33,22 @@ export function uniqueId() {
   return dateString + randomness;
 }
 
-export function formatPost(data, timestamp, id) {
-  const { author, body, category, title } = data;
+export function formatPost(data, author, authorId) {
+  const { body, category, title } = data;
   return {
-    id,
-    timestamp,
-    author,
     title,
     body,
     category,
+    author,
+    authorId,
   };
 }
 
-export function formatPostComment(data, timestamp, id, parentId) {
-  const { author, body } = data;
+export function formatPostComment(data, author, authorId, parentId) {
+  const { body } = data;
   return {
-    id,
-    timestamp,
     author,
+    authorId,
     body,
     parentId,
   };

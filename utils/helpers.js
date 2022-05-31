@@ -55,10 +55,39 @@ const validatePassword = (password) => {
   return true;
 };
 
+const votes = (option, voterId, findPostId) => {
+  if (option === "upVote" && !findPostId.supportVoters.includes(voterId)) {
+    findPostId.supportVoters.push(voterId);
+    if (findPostId.opposeVoters.includes(voterId)) {
+      findPostId.opposeVoters.remove(voterId);
+    }
+  } else if (
+    option === "upVote" &&
+    findPostId.supportVoters.includes(voterId)
+  ) {
+    findPostId.supportVoters.remove(voterId);
+  } else if (
+    option === "downVote" &&
+    !findPostId.opposeVoters.includes(voterId)
+  ) {
+    findPostId.opposeVoters.push(voterId);
+    if (findPostId.supportVoters.includes(voterId)) {
+      findPostId.supportVoters.remove(voterId);
+    }
+  } else if (
+    option === "downVote" &&
+    findPostId.opposeVoters.includes(voterId)
+  ) {
+    findPostId.opposeVoters.remove(voterId);
+  }
+  return findPostId;
+};
+
 module.exports = {
   hashPassword,
   comparePassword,
   isValidEmail,
   validatePassword,
   generateToken,
+  votes,
 };

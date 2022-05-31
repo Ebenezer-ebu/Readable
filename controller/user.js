@@ -59,6 +59,7 @@ const userLogin = async (req, res) => {
     }
     let obj = {
       username: userInDB.username,
+      userId: userInDB._id,
       email: userInDB.email,
       imageUrl: userInDB.imageUrl,
     };

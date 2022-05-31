@@ -21,86 +21,99 @@ function receivePost(info) {
 }
 
 export function allPost(info) {
-    return {
-        type: ALL_POST,
-        info,
-    }
+  return {
+    type: ALL_POST,
+    info,
+  };
 }
 
 function voted(info) {
-    return {
-        type: VOTE,
-        info
-    }
+  return {
+    type: VOTE,
+    info,
+  };
 }
 
 function posted(info) {
-    return {
-        type: POST,
-        info
-    }
+  return {
+    type: POST,
+    info,
+  };
 }
 
 function deletePost(id) {
-    return {
-        type: DELETE_POST,
-        id
-    }
+  return {
+    type: DELETE_POST,
+    id,
+  };
 }
 
 function editPost(data) {
-    return {
-        type: EDIT_POST,
-        data
-    }
+  return {
+    type: EDIT_POST,
+    data,
+  };
 }
 
 export function getInitialPost(category) {
-    return (dispatch) => {
-        return getPostByCategories(category).then(data => {
-            dispatch(receivePost(data));
-        }).catch(e => {
-            console.log("Error: ", e);
-        })
-    }
+  return (dispatch) => {
+    return getPostByCategories(category)
+      .then((data) => {
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        dispatch(receivePost(data.data));
+      })
+      .catch((e) => {
+        console.log("Error: ", e);
+        dispatch(receivePost({}));
+      });
+  };
 }
 
-
-export function handleVoted(id, option) {
-    return (dispatch) => {
-        return vote(id, option).then(data => {
-            dispatch(voted(data))
-        }).catch(e => {
-            console.log("Error: ", e);
-        })
-    }
+export function handleVoted(id, option, voterId) {
+  return (dispatch) => {
+    return vote(id, option, voterId)
+      .then((data) => {
+        dispatch(voted(data));
+      })
+      .catch((e) => {
+        console.log("Error: ", e);
+      });
+  };
 }
 
 export function handlePost(body) {
-    return (dispatch) => {
-        return post(body).then(data => {
-            dispatch(posted(data))
-        }).catch(e => {
-            console.log("Error: ", e);
-        })
-    }
+  return (dispatch) => {
+    return post(body)
+      .then((data) => {
+        dispatch(posted(data));
+      })
+      .catch((e) => {
+        console.log("Error: ", e);
+      });
+  };
 }
 
 export function handleDeletePost(id) {
-    return (dispatch) => {
-        dispatch(deletePost(id))
-        return deletePostByID(id).then().catch(e => {
-            console.log("Error: ", e)
-        })
-    }
+  return (dispatch) => {
+    dispatch(deletePost(id));
+    return deletePostByID(id)
+      .then()
+      .catch((e) => {
+        console.log("Error: ", e);
+      });
+  };
 }
 
 export function handleEditPost(body, id) {
-    return (dispatch) => {
-        return editPostByID(body, id).then(data => {
-            dispatch(editPost(data))
-        }).catch(e => {
-            console.log("Error: ", e);
-        })
-    }
+  return (dispatch) => {
+    return editPostByID(body, id)
+      .then((data) => {
+        dispatch(editPost(data));
+      })
+      .catch((e) => {
+        console.log("Error: ", e);
+      });
+  };
 }

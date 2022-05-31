@@ -12,22 +12,20 @@ const commentSchema = new Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
     author: {
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
     authorId: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    voteScore: Number,
-    supportVoters: [Schema.Types.ObjectId],
-    opposeVoters: [Schema.Types.ObjectId],
+    voteScore: { type: Number, default: 0 },
+    supportVoters: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    opposeVoters: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

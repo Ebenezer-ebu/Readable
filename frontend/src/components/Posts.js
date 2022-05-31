@@ -23,7 +23,7 @@ const Posts = (props) => {
         <p>
           Post by <strong>{detail.author}</strong>
         </p>
-        <p>{formatDate(detail.timestamp)}</p>
+        <p>{formatDate(detail.createdAt)}</p>
         <p>{detail.commentCount} Comments</p>
         <div>{detail.voteScore} Votes</div>
         {showForm && (
@@ -35,14 +35,14 @@ const Posts = (props) => {
           </div>
         )}
         <div className="group-btn">
-          <button onClick={() => handleVote(detail.id, "upVote")}>
+          <button onClick={() => handleVote(detail._id, "upVote")}>
             <ThumbUpAltIcon />
           </button>
-          <button onClick={() => handleVote(detail.id, "downVote")}>
+          <button onClick={() => handleVote(detail._id, "downVote")}>
             <ThumbDownAltIcon />
           </button>
         </div>
-        <button className="del" onClick={() => handleDelete(detail.id)}>
+        <button className="del" onClick={() => handleDelete(detail._id)}>
           <DeleteOutlineIcon />
         </button>
       </div>

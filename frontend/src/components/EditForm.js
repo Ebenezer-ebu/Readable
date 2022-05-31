@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { handleEditPost } from "../actions/post";
+import { getUser } from "../utils/helpers";
 
 const EditForm = (props) => {
   const { detail, dispatch } = props;
+  const user = getUser();
   const [inputValue, setValue] = useState({
     title: detail.title,
-    author: detail.author,
     body: detail.body,
   });
 
@@ -16,7 +17,7 @@ const EditForm = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(handleEditPost(inputValue, detail.id));
+    dispatch(handleEditPost(inputValue, detail._id));
   };
   return (
     <div className="form-box">
@@ -30,16 +31,6 @@ const EditForm = (props) => {
               name="title"
               placeholder="Title..."
               value={inputValue.title}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Author name:
-            <input
-              type="text"
-              name="author"
-              placeholder="Author..."
-              value={inputValue.author}
               onChange={handleChange}
             />
           </label>
